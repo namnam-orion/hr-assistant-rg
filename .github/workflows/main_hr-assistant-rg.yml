@@ -1,4 +1,4 @@
-name: Build and deploy Python app to Azure Web App - hr-policy-assistant-api
+name: Deploy HR Policy Assistant API to Azure
 
 on:
   push:
@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Optional: run tests here
-
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
@@ -47,6 +45,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'hr-policy-assistant-api'   
+          app-name: 'hr-policy-assistant-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
