@@ -53,13 +53,6 @@ async def ask(query: Query):
         )
 
         answer = response.choices[0].message.content.strip()
-        citations = []
-        if hasattr(response.choices[0].message, "context"):
-            context_data = getattr(response.choices[0].message, "context", {})
-            if isinstance(context_data, dict):
-                citations = context_data.get("citations", [])
-                logger.info(f"Citations: {citations}")
-
         return AnswerResponse(answer=answer)
 
     except Exception as e:
