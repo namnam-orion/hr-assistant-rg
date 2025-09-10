@@ -58,8 +58,9 @@ async def ask(query: Query):
             context_data = getattr(response.choices[0].message, "context", {})
             if isinstance(context_data, dict):
                 citations = context_data.get("citations", [])
+                logger.info(f"Citations: {citations}")
 
-        return AnswerResponse(answer=answer, citations=citations)
+        return AnswerResponse(answer=answer)
 
     except Exception as e:
         logger.error(f"Error processing request: {e}")

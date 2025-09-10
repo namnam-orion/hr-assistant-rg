@@ -10,7 +10,6 @@ class Query(BaseModel):
 
 class AnswerResponse(BaseModel):
     answer: str
-    citations: Optional[List[Dict[str, Any]]] = []
 
 class ErrorResponse(BaseModel):
     error: str
