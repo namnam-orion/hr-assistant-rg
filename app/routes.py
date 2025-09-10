@@ -10,11 +10,11 @@ router = APIRouter()
 
 @router.get("/")
 async def health():
-    return {"message": "Welcome to the HR Policy Assistant API. Use the /ask endpoint to ask questions."}
+    return {"message": "Welcome to the HR Policy Assistant API. Use the /ask endpoint to chat."}
 
 @router.post("/ask", response_model=AnswerResponse, responses={500: {"model": ErrorResponse}})
 async def ask(query: Query):
-    logger.info(f"Received question: {query.question}")
+    logger.info(f"Received messages: {query.messages}")
     try:
         extension_config = {
             "data_sources": [
@@ -47,7 +47,7 @@ async def ask(query: Query):
                         "reply: 'I could not find that in the company policies.'"
                     )
                 },
-                {"role": "user", "content": query.question}
+                *[{"role": msg.role, "content": msg.content} for msg in query.messages],
             ],
             extra_body=extension_config
         )
